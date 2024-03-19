@@ -1,4 +1,4 @@
-name: Deploy website
+name: Deploy1 website
 on:
   push:
     branches:
@@ -22,7 +22,7 @@ jobs:
     outputs:
       script-file: ${{ steps.publish.outputs.script-file }}
     steps:
-      - name: Getting code
+      - name: Get code
         uses: actions/checkout@v3
       - name: Install dependencies
         run: npm ci
