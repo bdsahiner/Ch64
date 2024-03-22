@@ -45,6 +45,24 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint code
+        run: npm run lint
+      - name: Test code
+        run: npm run test      
+      - name: Build website
+        run: npm run build
+      - name: Publish JS filename
+        id: publish
+        run: echo "::set-output name=script-file::$(find dist/assets/*.js -type f -execdir echo '{}')"
+      - name: upload artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-files
+          path: dist      
       - name: get build artifacts
         uses: actions/download-artifact@v3
         with:
