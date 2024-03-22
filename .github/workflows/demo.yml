@@ -21,7 +21,15 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
-    steps:   
+    steps:
+      - name: Get code
+        uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint code
+        run: npm run lint
+      - name: Test code
+        run: npm run test      
       - name: Build website
         run: npm run build
       - name: Publish JS filename
