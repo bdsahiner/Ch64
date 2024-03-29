@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install dependencies
         run: npm ci
       - name: Lint code
@@ -21,9 +21,11 @@ jobs:
   build:
     needs: test
     runs-on: ubuntu-latest
+    outputs:
+      script-files: ${{ steps.publish.outputs.script-file }}
     steps:
       - name: Get code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Install dependencies
         run: npm ci
       - name: Lint code
@@ -34,9 +36,9 @@ jobs:
         run: npm run build
       - name: Publish JS filename
         id: publish
-        run: echo "::set-output name=script-file::$(find dist/assets/*.js -type f -execdir echo '{}')"
+        run: find dist/assets/*.js -type f -execdir echo '::set-output name=script-file::{}' ';'
       - name: upload artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: dist-files
           path: dist
@@ -44,17 +46,9 @@ jobs:
   deploy:
     needs: build
     runs-on: ubuntu-latest
-    steps:
-      - name: Publish JS filename
-        id: publish
-        run: echo "::set-output name=script-file::$(find dist/assets/*.js -type f -execdir echo '{}')"
-      - name: upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: dist-files
-          path: dist      
+    steps:   
       - name: get build artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
           name: dist-files
       - name: Output contents
