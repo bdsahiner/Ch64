@@ -86,6 +86,6 @@ jobs:
         uses: docker/build-push-action@v5.3.0
         with:
           context: .
-          file: ../../Dockerfile
+          file: ../Dockerfile
           push: true
           tags: bdsahiner/deneme:tagname
