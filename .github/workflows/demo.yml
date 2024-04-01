@@ -16,7 +16,10 @@ jobs:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
-        run: npm ci
+        run: | 
+          npm ci
+          npm audit fix
+          npm audit
       - name: Lint code
         run: npm run lint
   test:
@@ -31,7 +34,10 @@ jobs:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
-        run: npm ci
+        run: | 
+          npm ci
+          npm audit fix
+          npm audit
       - name: Test code
         run: npm run test
       - name: Upload test report
@@ -52,7 +58,10 @@ jobs:
           path: ~/.npm
           key: deps-node-modules-${{ hashFiles('**/package-lock.json') }}
       - name: Install dependencies
-        run: npm ci
+        run: | 
+          npm ci
+          npm audit fix
+          npm audit
       - name: Build website
         id: build-website
         run: npm run build
